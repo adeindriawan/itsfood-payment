@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Utils\BniEnc;
-use App\Utils\BniCallback;
+use App\Http\Utils\BniEnc;
+use App\Http\Utils\BniCallback;
 
 class CreateVAController extends Controller
 {
-  public function __invoke(Request $request)
+  public function createVA(Request $request)
   {
     // query amount of orders and accumulate them
     // query costs and discounts of order details that related to those orders and aggregate them
