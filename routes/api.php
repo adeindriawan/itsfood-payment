@@ -24,3 +24,4 @@ Route::get('/', function (Request $request) {
 });
 Route::post('/orders/va/create', [CreateVAController::class, 'createVA']);
 Route::post('/orders/transfer/confirm', [UploadPaymentConfirmationController::class, 'upload']);
+Route::get('/payments/payment', \App\Http\Controllers\GetPayment::class);
