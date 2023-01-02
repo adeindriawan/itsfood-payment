@@ -46,7 +46,7 @@ class CreateVAController extends Controller
     $ordersAmount = $this->getTotalOrdersAmount($validOrders);
     $costsAndDiscountsAmount = $this->getTotalCostsAndDiscounts($validOrders);
     $totalAmount = $ordersAmount + $costsAndDiscountsAmount;
-    $transactionId = \implode(":", $validOrders);
+    $transactionId = bin2hex(random_bytes(15));
     $bniResponse = $this->createVirtualAccount($transactionId, $totalAmount, $customerId);
     if ($bniResponse["status"] !== "000") {
       return response()->json([
