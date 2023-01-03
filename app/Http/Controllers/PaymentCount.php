@@ -33,7 +33,10 @@ class PaymentCount extends Controller
                             ->count();
 
         return response()->json([
-            'count' => $paymentCount
+            'status' => 'success',
+            'result' => [
+                'count' => $paymentCount   
+            ]
         ]);
     }
 }
