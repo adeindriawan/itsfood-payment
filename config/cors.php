@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Arr;
 
 return [
 
@@ -15,11 +16,13 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    // 'paths' => ['api/*', 'sanctum/csrf-cookie'],
+
+    'paths' => [],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => Arr::flatten(array_map(fn($s) => ['http://'.$s, 'https://'.$s ], explode(',', env('CORS_ALLOWED_ORIGINS')))),
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +32,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];
