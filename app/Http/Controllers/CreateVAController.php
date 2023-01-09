@@ -67,7 +67,7 @@ class CreateVAController extends Controller
 
     // after VA creation is success
     $newPaymentId = DB::table('payments')->insertGetId([
-      "transaction_id" => \implode(",", $validOrders),
+      "transaction_id" => $transactionId,
       "customer_id" => $customerId,
       "method" => "VA",
       "virtual_account" => $virtualAccount,
