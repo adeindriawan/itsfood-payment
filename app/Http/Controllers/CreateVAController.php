@@ -66,7 +66,7 @@ class CreateVAController extends Controller
     $virtualAccount = $responseData["virtual_account"];
 
     // after VA creation is success
-    $newPaymentId = DB::table('payments')->insertGetId([
+    $newPayment = [
       "transaction_id" => $transactionId,
       "customer_id" => $customerId,
       "method" => "VA",
@@ -75,7 +75,9 @@ class CreateVAController extends Controller
       "status" => "Unpaid",
       "created_at" => date('Y-m-d H:i:s'),
       "created_by" => $userName
-    ]);
+    ];
+
+    $newPaymentId = DB::table('payments')->insertGetId($newPayment);
 
     foreach ($validOrders as $key => $value) {
       DB::table('payment_details')->insert([
@@ -90,9 +92,10 @@ class CreateVAController extends Controller
     $result = [
       "status" => "success",
       "result" => [
-        'totalAmount' => $ordersAmount,
-        'totalCostsAndDiscounts' => $costsAndDiscountsAmount,
-        'BniResponse' => $responseData
+        "totalAmount" => $ordersAmount,
+        "totalCostsAndDiscounts" => $costsAndDiscountsAmount,
+        "BniResponse" => $responseData,
+        "payment" => array_merge([ "id" => $newPaymentId ], $newPayment) 
       ],
       "errors" => null,
       "description" => "Berhasil membuat virtual account untuk order yang telah diinput."
