@@ -22,11 +22,13 @@ class GetPayment extends Controller
 
       $payment = DB::table('payments')
                     ->select([
+                      'id',
                       'method',
                       'virtual_account',
                       'amount',
                       'file',
-                      'status'
+                      'status',
+                      'created_at'
                     ])
                     ->where('id', $params['id'])
                     ->first();
@@ -55,4 +57,49 @@ class GetPayment extends Controller
         ]
       ]);
     }
+
+    public function getPendingPayment (Request $request) {
+      $params = $request->validate([
+        'customer_id' => ['required', 'numeric']
+      ]);
+
+      $pendingPayment = DB::table('payments')
+                            ->select([
+                              'id',
+                              'method',
+                              'virtual_account',
+                              'amount',
+                              'file',
+                              'status',
+                              'created_at'
+                            ])
+                            ->where('status', 'Unpaid')
+                            ->where('customer_id', $params['customer_id'])
+                            ->first();
+
+      if (empty($payment)) {
+        return response([
+          'status' => 'failed',
+          'message' => 'Payment record not found'
+        ], 404);
+      }
+                      
+      $paymentDetails = DB::table('payment_details')
+                            ->select([
+                              'id',
+                              'order_id',
+                              'status'
+                            ])
+                            ->where('payment_id', $pendingPayment->id)
+                            ->get();
+
+      return response()->json([
+        'status' => 'success',
+        'result' => [
+          'payment' => $pendingPayment,
+          'payment_details' => $paymentDetails
+        ]
+      ]);
+    }
 }
+
