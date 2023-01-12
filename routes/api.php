@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CreateVAController;
-use App\Http\Controllers\UploadPaymentConfirmationController;
+// use App\Http\Controllers\UploadPaymentConfirmationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ Route::get('/', function (Request $request) {
     return 'hello';
 });
 Route::post('/orders/va/create', [CreateVAController::class, 'createVA']);
-Route::post('/orders/transfer/confirm', [UploadPaymentConfirmationController::class, 'upload']);
+Route::post('/orders/transfer/confirm', \App\Http\Controllers\UploadPaymentConfirmation::class);
 Route::get('/payments/payment', \App\Http\Controllers\GetPayment::class);
 Route::get('/payments/count', \App\Http\Controllers\PaymentCount::class);
 Route::get('/payments', \App\Http\Controllers\GetPayments::class);
