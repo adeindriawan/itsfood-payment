@@ -4,7 +4,7 @@ namespace App\Http\Utils;
 
 class BniCallback {
 
-  public function getContent($payload = '')
+  public static function getContent($payload = '')
   {
     $url = env('BNI_PAYMENT_URL');
 

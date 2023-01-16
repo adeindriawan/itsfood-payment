@@ -28,3 +28,4 @@ Route::get('/payments/payment', \App\Http\Controllers\GetPayment::class);
 Route::get('/payments/count', \App\Http\Controllers\PaymentCount::class);
 Route::get('/payments', \App\Http\Controllers\GetPayments::class);
 Route::get('/pending-payment', [\App\Http\Controllers\GetPayment::class, 'getPendingPayment']);
+Route::get('/check-va', \App\Http\Controllers\CheckVA::class);
