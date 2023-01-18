@@ -77,10 +77,11 @@ class GetPayment extends Controller
                             ->where('customer_id', $params['customer_id'])
                             ->first();
 
-      if (empty($payment)) {
+      if (empty($pendingPayment)) {
         return response([
           'status' => 'failed',
-          'message' => 'Payment record not found'
+          'description' => 'No pending payment found',
+          'result' => null
         ], 404);
       }
                       
